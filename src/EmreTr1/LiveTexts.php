@@ -31,9 +31,7 @@ class LiveTexts extends PluginBase implements Listener{
 			$files = scandir($dir);
 			
 			foreach($files as $file){
-				if(!is_file($dir . $file)) continue;
-	
-				$name = str_ireplace(".txt", "", $file);
+				$name = $file;
 				$data = trim(str_ireplace("\r\n", "\n", file_get_contents($dir . $file)));
 				
 				$this->cache[$name] = $data;
@@ -42,7 +40,7 @@ class LiveTexts extends PluginBase implements Listener{
 	}
 	
 	public function onCommand(CommandSender $p, Command $cmd, $label, array $args){
-		if(!$p->isOp()) return false;
+if(!$p->isOp()) return false;
 		if(!empty($args[0])){
 			switch($args[0]){
 				case 'addtext':
@@ -100,6 +98,7 @@ class LiveTexts extends PluginBase implements Listener{
 	$nbt->Pos = new ListTag("Pos", [new DoubleTag("", $pos->x), new DoubleTag("", $pos->y), new DoubleTag("", $pos->z)]);
 	$nbt->Rotation = new ListTag("Rotation", [new FloatTag("", 0), new FloatTag("", 0)]);
 	$nbt->Motion = new ListTag("Pos", [new DoubleTag("", 0), new DoubleTag("", 0), new DoubleTag("", 0)]);
+   $nbt->baseText = new StringTag("baseText", $text);
 
 	$entity = Entity::createEntity("Text", $pos->level, $nbt);
 	$entity->setNameTag($text);
