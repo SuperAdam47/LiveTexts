@@ -29,12 +29,16 @@ class Text extends Creature{
 	
 	public function onUpdate($tick){
 		if($this->closed) return;
-		$this->setNameTag(LiveTexts::replacedText($this->getNameTag()));
+		$this->setNameTag(LiveTexts::replacedText($this->getBaseText()));
 	}
+
+  public function getBaseText(){
+   return $this->namedtag->baseText->getValue() ?? $this->getNameTag();
+  }
 	
 	public function spawnTo(Player $p){
 		$this->setDataFlag(Entity::DATA_FLAGS, Entity::DATA_FLAG_IMMOBILE, true);
-		$this->setNameTag(LiveTexts::replaceForPlayer($p, $this->getNameTag()));
+		$this->setNameTag(LiveTexts::replaceForPlayer($p, $this->getBaseText()));
 		
 		$this->setNameTagVisible(true);
 		$this->setNameTagAlwaysVisible(true);
